@@ -1,0 +1,40 @@
+# @no-redirect
+POST localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "name": "taras",
+  "email": "taras@gmail.com",
+  "password": "1111"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+###
+
+# @no-redirect
+POST localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "email": "taras@gmail.com",
+  "password": "1111"
+}
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+###
+
+#url for aouth2 (open in browser)
+GET localhost:8080/login
+
+###
+
+# Example of request that needs auth
+# @no-redirect
+GET localhost:8080/hello
+Authorization: Bearer {{auth_token}}
